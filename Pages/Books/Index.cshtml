@@ -1,0 +1,87 @@
+﻿@page
+@model Muresan_Denisaa_lab2.Pages.Books.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form method="get">
+<label for="AuthorDropdown">Select Author:</label>
+    <select id="AuthorDropdown" name="authorId" class="form-control" onchange="this.form.submit()">
+    <option value="">All Authors</option>
+     @foreach (var author in (SelectList)ViewData["AuthorID"])
+        {
+            <option value="@author.Value">
+                @author.Text
+            </option>
+        }
+</select>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Title)
+            </th>
+            <th>
+                Auhor
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].PublishingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Publisher.PublisherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Author.LastName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Book) 
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @if (item.Author != null)
+                    {
+                        @item.Author.FirstName @item.Author.LastName
+                    }
+                else
+                    {
+                        <span>Autor necunoscut</span>
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublishingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.FirstName)
+                @Html.DisplayFor(modelItem => item.Author.LastName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
