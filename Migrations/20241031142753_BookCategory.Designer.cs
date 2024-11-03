@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Muresan_Denisaa_lab2.Data;
 
@@ -11,9 +12,11 @@ using Muresan_Denisaa_lab2.Data;
 namespace Muresan_Denisaa_lab2.Migrations
 {
     [DbContext(typeof(Muresan_Denisaa_lab2Context))]
-    partial class Muresan_Denisaa_lab2ContextModelSnapshot : ModelSnapshot
+    [Migration("20241031142753_BookCategory")]
+    partial class BookCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

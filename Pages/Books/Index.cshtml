@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/"
 @model Muresan_Denisaa_lab2.Pages.Books.IndexModel
 
 @{
@@ -10,18 +10,6 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<form method="get">
-<label for="AuthorDropdown">Select Author:</label>
-    <select id="AuthorDropdown" name="authorId" class="form-control" onchange="this.form.submit()">
-    <option value="">All Authors</option>
-     @foreach (var author in (SelectList)ViewData["AuthorID"])
-        {
-            <option value="@author.Value">
-                @author.Text
-            </option>
-        }
-</select>
-</form>
 
 <table class="table">
     <thead>
@@ -44,12 +32,24 @@
             <th>
                 @Html.DisplayNameFor(model => model.Book[0].Author.LastName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].BookCategories)
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Book) 
-{
-        <tr>
+@{
+    int rowCounter = 0;
+}
+
+@foreach (var item in Model.BookD.Books) {
+       string selectedRow = "";
+            if (item.ID == Model.BookID)
+            {
+                selectedRow = "table-success";
+            }
+
+         <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
@@ -73,9 +73,17 @@
                 @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Author.FirstName)
-                @Html.DisplayFor(modelItem => item.Author.LastName)
+                @{
+                    foreach (var category in item.BookCategories)
+                    {
+                       @category.Category.ID @: @category.Category.CategoryName <br />
+                    }
+                }
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author.FirstName)
+                    @Html.DisplayFor(modelItem => item.Author.LastName)
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |

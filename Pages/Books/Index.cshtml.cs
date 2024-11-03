@@ -21,22 +21,36 @@ namespace Muresan_Denisaa_lab2.Pages.Books
             _context = context;
         }
 
-        public IList<Book> Book { get;set; } = default!;
+        public IList<Book> Book { get;set; } 
+        public BookData BookD { get;set; }
+        public int BookID { get;set; }
 
-        public async Task OnGetAsync(int? authorId)
+        public int CategoryID { get;set; }
+
+
+        public async Task OnGetAsync(int? id, int? categoryID)
         {
-            ViewData["AuthorID"] = new SelectList(await _context.Authors.ToListAsync(), "ID", "LastName");
+            
+            BookD = new BookData();
 
-            IQueryable<Book> booksQuery = _context.Book
-                .Include(b => b.Author)
-                .Include(b => b.Publisher);
+          BookD.Books = await _context.Book  
+               .Include(b => b.Publisher)
+               .Include(b =>b.BookCategories)
+                .ThenInclude(b =>b.Category)
+               .AsNoTracking()
+               .OrderBy(b => b.Title)
+               .ToListAsync();
 
-            if (authorId.HasValue)
+
+            if (id != null)
             {
-                booksQuery = booksQuery.Where(b => b.AuthorID == authorId.Value);
+                BookID = id.Value;
+                Book book = BookD.Books
+                    .Where(i => i.ID == id.Value).Single();
+                BookD.Categories = book.BookCategories.Select(s => s.Category);
             }
 
-            Book = await booksQuery.ToListAsync();
+            
         }
     }
 }

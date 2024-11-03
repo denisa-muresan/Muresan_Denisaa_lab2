@@ -18,5 +18,6 @@ namespace Muresan_Denisaa_lab2.Data
         public DbSet<Muresan_Denisaa_lab2.Models.Publisher> Publisher { get; set; } = default!;
 
         public DbSet<Muresan_Denisaa_lab2.Models.Author> Authors { get; set; } = default!;
+        public DbSet<Muresan_Denisaa_lab2.Models.Category> Category { get; set; } = default!;
     }
 }
