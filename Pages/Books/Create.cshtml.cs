@@ -31,8 +31,8 @@ namespace Muresan_Denisaa_lab2.Pages.Books
             ViewData["AuthorID"] = new SelectList(_context.Authors, "ID", "LastName");
             ViewData["PublisherID"] = new SelectList(_context.Publisher, "ID","PublisherName");
 
-            var book = new Book();
-            book.BookCategories = new List<BookCategory>();
+            var Book = new Book();
+            Book.BookCategories = new List<BookCategory>();
 
             PopulateAssisgnedCategoryData(_context, Book);
 
